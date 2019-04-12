@@ -1,4 +1,4 @@
-
+package com.mathChart;
 /*
 Priority of operations:
 1.Braces
@@ -10,7 +10,7 @@ Priority of operations:
 
 import java.util.ArrayList;
 import java.util.Stack;
-
+ 
 public class FunctionCalculator {
 	private String function; // This is our function f(x) which will be calculated
 	private double x; // This is our value of x - argument of function f(x)
@@ -55,6 +55,7 @@ public class FunctionCalculator {
 	public double Calculator() {
 		function = function.toLowerCase();
 		function = function.replaceAll(" ", "");
+		function = function.replaceAll(",", ".");
 		result = 0.0;
 		object = 0.0;
 		offset = 0;
@@ -346,5 +347,5 @@ public class FunctionCalculator {
 			}
 		}
 		return result;
-	}
+	} 
 }
