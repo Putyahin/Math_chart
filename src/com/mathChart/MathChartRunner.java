@@ -14,20 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/MathChartRunner")
 public class MathChartRunner extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MathChartRunner() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public MathChartRunner() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String function = request.getParameter("y");
 		String xStart = request.getParameter("xstart");
 		String xEnd = request.getParameter("xend");
@@ -55,24 +55,34 @@ public class MathChartRunner extends HttpServlet {
 		text.append("x end = <INPUT TYPE=TEXT NAME=xend VALUE= " + xEnd + " SIZE=20>");
 		text.append("</P>");
 		text.append("<P><INPUT TYPE=SUBMIT VALUE=Generate chart>");
+		MathChart chart = new MathChart();
+		if (chart.isMathChart(function, xStart, xEnd)) {
+			function = function.replace("+", "z");
+			function = function.replace("^", "v");
+			text.append("<P>");
+			text.append("<IMG SRC=\"MathChartServlet?y=" + function + "&xstart=" + xStart + "&xend=" + xEnd
+					+ "\" BORDER=1 />");
+			text.append("</P>");
+		} else {
+			text.append("<P>");
+			text.append("Error: " + chart.error.get(0));
+			text.append("</P>");
+		}
 		text.append("</FORM>");
-		function = function.replace("+", "z");
-		function = function.replace("^", "v");
-		text.append("<IMG SRC=\"MathChartServlet?y=" + function + "&xstart=" + xStart + "&xend=" + xEnd
-				+ "\" BORDER=1 WIDTH=600 HEIGHT=400/>");
 		text.append("</body>");
 		text.append("</html>");
-		response.setContentType("text/html");
 		PrintWriter out = new PrintWriter(response.getWriter());
-		out.print(text.toString());
+		response.setContentType("text/html");
+		out.println(text.toString());
 		out.close();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

@@ -10,11 +10,11 @@ Priority of operations:
 
 import java.util.ArrayList;
 import java.util.Stack;
- 
+
 public class FunctionCalculator {
 	private String function; // This is our function f(x) which will be calculated
 	private double x; // This is our value of x - argument of function f(x)
-	private ArrayList<String> error; // Errors
+	public ArrayList<String> error; // Errors
 	private int offset;
 	private double result;
 	private char op;
@@ -54,8 +54,8 @@ public class FunctionCalculator {
 
 	public double Calculator() {
 		function = function.toLowerCase();
-		function = function.replaceAll(" ", "");
-		function = function.replaceAll(",", ".");
+		function = function.replace(" ", "");
+		function = function.replace(",", ".");
 		result = 0.0;
 		object = 0.0;
 		offset = 0;
@@ -104,16 +104,22 @@ public class FunctionCalculator {
 			if (exp[i] == '+' || exp[i] == '-' || exp[i] == '/' || exp[i] == '*' || exp[i] == '^') {
 				offset = i + 1;
 				GetObject();
-				if (op != '0')
+				if (op != '0' && op != 'f')
 					ok = false;
 			}
-			if (exp[i]=='(') {
+			if (exp[i] == '(') {
 				offset = i + 1;
 				GetObject();
-				if (op != '0' && op!='-')
+				if (op != '0' && op != '-' && op != 'f')
 					ok = false;
 			}
-				
+			if (exp[i] == 'x') {
+				offset = i + 1;
+				GetObject();
+				if (op == '0')
+					ok = false;
+			}
+
 		}
 		return ok;
 	}
@@ -129,9 +135,10 @@ public class FunctionCalculator {
 		try {
 			result = Double.parseDouble(function.substring(offset, offset + k));
 			offset = offset + k;
-		} catch (Exception e) {
-			error.add("Invalid number");
-			offset = function.length() - 1;
+		} catch (NullPointerException | NumberFormatException e) {
+			error.add("invalid number");
+			offset = function.length();
+			offsetStack.push(offset);
 		}
 		return result;
 	}
@@ -187,10 +194,15 @@ public class FunctionCalculator {
 							object = Math.PI;
 							offset++;
 							noObj = false;
-						} else
-							error.add("Invalid function");
+						} else {
+							error.add("error in math expression");
+							offset = function.length();
+							offsetStack.push(offset);
+						}
 					} else {
-						error.add("Invalid function");
+						error.add("error in math expression");
+						offset = function.length();
+						offsetStack.push(offset);
 					}
 					break;
 				case 'e':
@@ -207,6 +219,11 @@ public class FunctionCalculator {
 				case 'x':
 					object = GetX();
 					noObj = false;
+					break;
+				default:
+					error.add("error in math expression");
+					offset = function.length();
+					offsetStack.push(offset);
 					break;
 				}
 
@@ -294,9 +311,21 @@ public class FunctionCalculator {
 						double temp = ExpressionPriority2();
 						result = Math.sqrt(temp);
 					}
+					else {
+						error.add("invalid function");
+						offset = function.length();
+						offsetStack.push(offset);
+					}
+				} else {
+					error.add("invalid function");
+					offset = function.length();
+					offsetStack.push(offset);
 				}
-			} else
-				error.add("Invalid function");
+			} else {
+				error.add("invalid function");
+				offset = function.length();
+				offsetStack.push(offset);
+			}
 
 		}
 		return result;
@@ -347,5 +376,5 @@ public class FunctionCalculator {
 			}
 		}
 		return result;
-	} 
+	}
 }
