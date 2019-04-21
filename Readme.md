@@ -1,8 +1,8 @@
-##About Math chart
+## About Math chart
 
 This project was written to create math charts. Entering the function y=f(x) and the interval of the argument x: x start and x end parameters, the user will get a math chart. In this project i used JFreeChart library to plot math chart and to convert it to .png file. Link: <http://www.jfree.org/jfreechart/>
 
-##Working with Math chart
+## Working with Math chart
 
 For example, let's enter following parameters:
 
