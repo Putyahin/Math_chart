@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## About Math chart
 
 This project was written to create math charts. Entering the function y=f(x) and the interval of the argument x: x start and x end parameters, the user will get a math chart. In this project i used JFreeChart library to plot math chart and to convert it to .png file. Link: <http://www.jfree.org/jfreechart/>
@@ -46,4 +45,3 @@ Supported functions and constants:
 * tan - the trigonometric tangent of an angle
 * log - the natural logarithm (base e) of a number
 * sqrt - the square root of a number
->>>>>>> 32693f02d5b32f19313378e7805296fe32cbd2e5
