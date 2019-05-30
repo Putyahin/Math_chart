@@ -39,11 +39,13 @@ public class CreateMathChart extends HttpServlet {
      */
     public CreateMathChart() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Creates a *.png image of the math chart, adds a row in the database 
+	 * and saves image to the Google Drive. Otherwise detects errors.
+	 * Sends the response in json format.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -106,7 +108,7 @@ public class CreateMathChart extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -114,7 +116,8 @@ public class CreateMathChart extends HttpServlet {
 		
 	}
 	
-	
+	/** Creates dataset of the math chart and visualizes it 
+	 *  with the use of JFreeChart library*/
 	private JFreeChart createLineChart(String function, double xStart, double xEnd) {
 		FunctionCalculator func = new FunctionCalculator(function, xStart);
 		XYSeriesCollection dataSet = new XYSeriesCollection();

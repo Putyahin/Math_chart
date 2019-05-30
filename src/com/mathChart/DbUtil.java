@@ -8,9 +8,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/** Creation of connection to the database*/
 public class DbUtil {
 	private static Connection connection = null;
 	
+	/** Creates connection to the database if it doesn't exist yet*/
 	public static Connection getConnection() {
 		if (connection != null) {
 			return connection;

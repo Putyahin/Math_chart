@@ -3,7 +3,7 @@ package com.mathChart;
 Priority of operations:
 1.Braces
 2.Unary minus and plus
-3.Math power and functions like sinus etc.
+3.Math power and functions like sine etc.
 4.Multiply, divide
 5.Plus, minus
 */
@@ -11,12 +11,17 @@ Priority of operations:
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * Calculates the value of mathematical function f(x) with the
+ * parameter x. 
+ *
+ */
 public class FunctionCalculator {
 	private String function; // This is our function f(x) which will be calculated
 	private double x; // This is our value of x - argument of function f(x)
 	public ArrayList<String> error; // Errors
 	private int offset;
-	private double result;
+//	private double result;
 	private char op;
 	private double object;
 	private char[] expression; // Function f(x) presented as array of chars
@@ -25,10 +30,11 @@ public class FunctionCalculator {
 	private Stack<Double> objectStack;
 	private Stack<Integer> offsetStack;
 
-	public FunctionCalculator() {
-		error = new ArrayList<>();
-	}
+//	public FunctionCalculator() {
+//		error = new ArrayList<>();
+//	}
 
+	/**  The constructor which sets values of fields function and x*/
 	public FunctionCalculator(String function, double x) {
 		this.function = function;
 		this.x = x;
@@ -36,27 +42,32 @@ public class FunctionCalculator {
 
 	}
 
+	/** The setter for field function - mathematical function f(x)*/
 	public void setFunction(String function) {
 		this.function = function;
 	}
 
+	/** The setter for x argument of function f(x)*/
 	public void setX(double x) {
 		this.x = x;
 	}
 
+	/** The getter for field function - mathematical function f(x)*/
 	public String getFunction() {
 		return this.function;
 	}
 
+	/** The getter for x argument of function f(x)*/
 	public double getX() {
 		return this.x;
 	}
 
+	/** The starting point in calculating the mathematical function */
 	public double Calculator() {
 		function = function.toLowerCase();
 		function = function.replace(" ", "");
 		function = function.replace(",", ".");
-		result = 0.0;
+//		result = 0.0;
 		object = 0.0;
 		offset = 0;
 		expression = function.toCharArray();
@@ -65,15 +76,17 @@ public class FunctionCalculator {
 		opStack = new Stack<>();
 		objectStack = new Stack<>();
 		offsetStack = new Stack<>();
-		return Calculate();
+		return ExpressionPriority5();
 	}
 
-	private double Calculate() {
+	
+//	private double Calculate() {
+//
+//		result = ExpressionPriority5();
+//		return result;
+//	}
 
-		result = ExpressionPriority5();
-		return result;
-	}
-
+	/** Checks the correctness of braces in the mathematical function*/
 	public boolean CheckBraces() {
 		boolean ok = false;
 		int braces = 0;
@@ -93,6 +106,7 @@ public class FunctionCalculator {
 		return ok;
 	}
 
+	/** Checks the correctness of operations in the mathematical function*/
 	public boolean CheckOp() {
 		boolean ok = true;
 		char[] exp;
@@ -124,6 +138,7 @@ public class FunctionCalculator {
 		return ok;
 	}
 
+	/** This method is used to extract the number and parse it to double*/
 	private double GetNumber() {
 		double result = 0.0;
 		int k = 0;
@@ -143,12 +158,15 @@ public class FunctionCalculator {
 		return result;
 	}
 
+	/** Returns the value of x argument*/
 	private double GetX() {
 		double result = x;
 		offset++;
 		return result;
 	}
 
+	/** Extracts the next object in field function. According to the type of the object,
+	 * method detects mathematical operation, mathematical function, x, number*/
 	private void GetObject() {
 		if (offset <= function.length() - 1) {
 			if (Character.isDigit(expression[offset])) {
@@ -231,6 +249,7 @@ public class FunctionCalculator {
 
 	}
 
+	/** Method works with braces*/
 	private double ExpressionPriority1() {
 		double result = 0.0;
 		if (offset <= function.length() - 1) {
@@ -261,6 +280,7 @@ public class FunctionCalculator {
 		return result;
 	}
 
+	/** Method works with unary plus or minus*/
 	private double ExpressionPriority2() {
 		if (noObj && op == '-') {
 			GetObject();
@@ -273,6 +293,7 @@ public class FunctionCalculator {
 		return ExpressionPriority1();
 	}
 
+	/** Method works with mathematical functions*/
 	private double ExpressionPriority3() {
 		double result = ExpressionPriority2();
 		while ((op == '^') || op == 'f') {
@@ -331,6 +352,7 @@ public class FunctionCalculator {
 		return result;
 	}
 
+	/** Method works with multiplying and dividing*/
 	private double ExpressionPriority4() {
 		double result = ExpressionPriority3();
 		while (op == '*' || op == '/') {
@@ -352,9 +374,10 @@ public class FunctionCalculator {
 		return result;
 	}
 
+	/** Method works with adding and subtracting*/
 	private double ExpressionPriority5() {
 		double result = 0.0;
-		noObj = true; // This variable used for unary minus detection
+		noObj = true; // This variable is used for unary minus detection
 		GetObject();
 		result = ExpressionPriority4();
 		while (offset <= function.length() - 1) {

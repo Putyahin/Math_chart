@@ -13,10 +13,12 @@ import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
- 
+
+/** Creates a new file on the Google Drive*/
 public class NewFile {
  
     // PRIVATE!
+	/** Directly creation of the file  and setting permissions readonly for anyone*/
     private static File _createGoogleFile(String googleFolderIdParent, String contentType, //
             String customFileName, AbstractInputStreamContent uploadStreamContent) throws IOException {
  
@@ -40,7 +42,7 @@ public class NewFile {
         return file;
     }
  
-    // Create Google File from byte[]
+    /** Create Google File from byte[] */
     public static File createGoogleFile(String googleFolderIdParent, String contentType, //
             String customFileName, byte[] uploadData) throws IOException {
         //
@@ -49,7 +51,7 @@ public class NewFile {
         return _createGoogleFile(googleFolderIdParent, contentType, customFileName, uploadStreamContent);
     }
  
-    // Create Google File from java.io.File
+    /** Create Google File from java.io.File */
     public static File createGoogleFile(String googleFolderIdParent, String contentType, //
             String customFileName, java.io.File uploadFile) throws IOException {
  
@@ -59,7 +61,7 @@ public class NewFile {
         return _createGoogleFile(googleFolderIdParent, contentType, customFileName, uploadStreamContent);
     }
  
-    // Create Google File from InputStream
+    /** Create Google File from InputStream */
     public static File createGoogleFile(String googleFolderIdParent, String contentType, //
             String customFileName, InputStream inputStream) throws IOException {
  

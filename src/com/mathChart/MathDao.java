@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/** Provides management of the database*/
 public class MathDao {
 	private Connection connection;
 	
@@ -13,6 +14,7 @@ public class MathDao {
 		connection = DbUtil.getConnection();
 	}
 
+	/** Adds a row in the database*/
 	public void addChart(int hash,String url) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -26,6 +28,7 @@ public class MathDao {
 		}
 	}
 
+	/** Deletes a row in the database*/
 	public void deleteChart(int hash) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement("delete from charts where hash=?");
@@ -37,6 +40,7 @@ public class MathDao {
 
 	}
 
+	/** Updates a row in the database*/
 	public void updateChart(int hash, String url) {
 		try {
 			PreparedStatement preparedStatement = connection
@@ -49,6 +53,7 @@ public class MathDao {
 		}
 	}
 
+	/** Gets all rows from the database*/
 	public void getAllCharts() {
 		try {
 			Statement statement = connection.createStatement();
@@ -63,6 +68,7 @@ public class MathDao {
 
 	}
 
+	/** Gets a url by a hash from the database*/
 	public String getUrl(int hash) {
 		String url=null;
 		try {

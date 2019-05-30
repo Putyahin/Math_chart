@@ -2,12 +2,15 @@ package com.mathChart;
 
 import java.io.Serializable;
 
+/** This class is used for storage of information of the math
+ *  chart which then will be sent in 
+ *  the json format*/
 public class MathResponse implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 3828022177269384821L;
+	/** Indicator of an error*/
 	private int error;
+	/** Link to the math chart on the Google Drive*/
 	private String url;
 	
 	public MathResponse() {
